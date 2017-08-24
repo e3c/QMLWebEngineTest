@@ -40,12 +40,6 @@ WebEngineView {
     Component.onCompleted: {
         console.log(Qt.application.arguments);
         backgroundColor = "transparent"
-        var urls = [];
-        urls.push("http://www.google.com/");
-        urls.push("http://www.bbc.com/");
-        urls.push("http://youtube.com/");
-
-        url =  urls[Math.floor(Math.random() * 3)];
         console.log("{WebPlayer} onCompleted", uri);
     }
 
@@ -118,7 +112,8 @@ WebEngineView {
     }
 
     function prepare(uri) {
-
+        console.log("{WebPlayer} prepare", uri);
+        url = uri;
     }
 
     function play() {

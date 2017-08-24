@@ -3,5 +3,6 @@
         <file>main.qml</file>
         <file>qtquickcontrols2.conf</file>
         <file>WebApp.qml</file>
+        <file>cache.js</file>
     </qresource>
 </RCC>

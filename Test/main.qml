@@ -1,6 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.3
+import "cache.js" as Cache
 
 ApplicationWindow {
     id: root
@@ -20,17 +21,28 @@ ApplicationWindow {
         }
     }
 
+    Component.onCompleted: {
+        Cache.init(10, factory, root);
+    }
+
     onTimerChanged: {
         console.log("Timer is now", timer);
 
         if (current) {
             current.stop();
-            current.destroy();
+            Cache.release(current);
         }
         current = next;
+
         if (current) current.play();
 
-        next = factory.createObject(root);
+        next = Cache.fetch();
+
+        var urls = [];
+        urls.push("http://www.google.com/");
+        urls.push("http://www.bbc.com/");
+        urls.push("http://youtube.com/");
+        next.prepare(urls[Math.floor(Math.random() * 3)]);
 
     }
 
