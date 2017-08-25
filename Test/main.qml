@@ -7,7 +7,6 @@ ApplicationWindow {
     id: root
     property var timer;
 
-    property var next;
     property var current;
 
     visible: true
@@ -22,28 +21,19 @@ ApplicationWindow {
     }
 
     Component.onCompleted: {
-        Cache.init(10, factory, root);
+        Cache.init(1, factory, root);
+        current = Cache.fetch();
     }
 
     onTimerChanged: {
         console.log("Timer is now", timer);
 
-        if (current) {
-            current.stop();
-            Cache.release(current);
-        }
-        current = next;
-
-        if (current) current.play();
-
-        next = Cache.fetch();
-
         var urls = [];
         urls.push("http://www.google.com/");
         urls.push("http://www.bbc.com/");
         urls.push("http://youtube.com/");
-        next.prepare(urls[Math.floor(Math.random() * 3)]);
-
+        current.prepare(urls[Math.floor(Math.random() * 3)]);
+        current.play();
     }
 
 
